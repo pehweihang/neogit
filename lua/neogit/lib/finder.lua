@@ -140,6 +140,10 @@ local function fzf_actions(on_select, allow_multi, refocus_status)
 
   return {
     ["default"] = function(selected)
+      if #selected < 1 then
+        local fzf_lua = require("fzf-lua")
+        selected = { fzf_lua.config.__resume_data.last_query }
+      end
       if allow_multi then
         on_select(selected)
       else
